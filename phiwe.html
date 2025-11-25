@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiwe's 21st Birthday</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f3a2b0 0%, #e88ca5 100%);
+            font-family: 'Crimson Text', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        /* Password Screen */
+        .password-screen {
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .password-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+            50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); }
+        }
+        
+        .lock-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .password-container h2 {
+            color: #d6336c;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .hint {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #f3a2b0;
+            border-radius: 10px;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-family: 'Crimson Text', serif;
+            transition: border-color 0.3s;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #d6336c;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #d6336c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Crimson Text', serif;
+        }
+        
+        .submit-btn:hover {
+            background: #b52855;
+        }
+        
+        .error-message {
+            color: #d6336c;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .dashboard-header h1 {
+            font-size: 72px;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: none;
+        }
+        
+        .burn-book-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .burn-letter {
+            display: inline-block;
+            padding: 15px 20px;
+            font-weight: bold;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        
+        .burn-letter:nth-child(1) {
+            font-family: 'Impact', sans-serif;
+            font-size: 85px;
+            background: #ff1493;
+            color: white;
+            transform: rotate(-8deg);
+        }
+        
+        .burn-letter:nth-child(2) {
+            font-family: 'Georgia', serif;
+            font-size: 75px;
+            background: #fff;
+            color: #d6336c;
+            transform: rotate(5deg);
+            border: 3px solid #d6336c;
+        }
+        
+        .burn-letter:nth-child(3) {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 80px;
+            background: #ffd700;
+            color: #000;
+            transform: rotate(-3deg);
+        }
+        
+        .burn-letter:nth-child(4) {
+            font-family: 'Courier New', monospace;
+            font-size: 90px;
+            background: #ff69b4;
+            color: white;
+            transform: rotate(7deg);
+            text-decoration: underline;
+        }
+        
+        .burn-letter:nth-child(5) {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 78px;
+            background: #87ceeb;
+            color: #fff;
+            transform: rotate(-5deg);
+            border: 2px dashed #000;
+        }
+        
+        .turns-21 {
+            font-family: 'Impact', sans-serif;
+            font-size: 48px;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .burn-letter {
+                padding: 10px 15px;
+            }
+            
+            .burn-letter:nth-child(1) { font-size: 55px; }
+            .burn-letter:nth-child(2) { font-size: 50px; }
+            .burn-letter:nth-child(3) { font-size: 52px; }
+            .burn-letter:nth-child(4) { font-size: 58px; }
+            .burn-letter:nth-child(5) { font-size: 51px; }
+            
+            .turns-21 {
+                font-size: 32px;
+            }
+        }
+        
+        .tabs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .tab-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tab-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        .tab-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-icon img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        
+        .tab-card h3 {
+            color: #d6336c;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-btn {
+            background: #d6336c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            font-family: 'Crimson Text', serif;
+            font-weight: bold;
+        }
+        
+        .back-btn:hover {
+            background: #b52855;
+        }
+        
+        .content-card h2 {
+            color: #d6336c;
+            font-size: 36px;
+            margin-bottom: 25px;
+        }
+        
+        .content-card p {
+            color: #555;
+            font-size: 20px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        /* Gifts Section */
+        .gift-item {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #f3a2b0;
+        }
+        
+        .gift-info h4 {
+            color: #d6336c;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        
+        .gift-info p {
+            color: #777;
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .redeem-btn {
+            background: #d6336c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Crimson Text', serif;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .redeem-btn:hover {
+            background: #b52855;
+        }
+        
+        .redeem-btn.redeemed {
+            background: #999;
+            cursor: not-allowed;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 42px;
+            }
+            
+            .tabs-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .tab-icon img {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .tab-card h3 {
+                font-size: 20px;
+            }
+            
+            .gift-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Screen -->
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-container">
+            <div class="lock-icon">🔒</div>
+            <h2>Enter Password</h2>
+            <p class="hint">Your favourite Spider-Man</p>
+            <input 
+                type="password" 
+                class="password-input" 
+                id="passwordInput" 
+                placeholder="Who's your Spider-Man?"
+                autocomplete="off"
+            >
+            <button class="submit-btn" onclick="checkPassword()">Unlock</button>
+            <p class="error-message" id="errorMessage">❌ Incorrect password. Try again!</p>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <h1>Phiwe Turns 21</h1>
+            <div class="burn-book-title">
+                <span class="burn-letter">P</span>
+                <span class="burn-letter">H</span>
+                <span class="burn-letter">I</span>
+                <span class="burn-letter">W</span>
+                <span class="burn-letter">E</span>
+            </div>
+            <div class="turns-21">TURNS 21</div>
+        </div>
+        
+        <div class="tabs-grid" id="tabsGrid">
+            <div class="tab-card" onclick="showSection('message')">
+                <div class="tab-icon">
+                    <img src="cute-envelope-icon-open-with-card-heart_24877-60896.avif" alt="Message">
+                </div>
+                <h3>A Message For You</h3>
+            </div>
+            
+            <div class="tab-card" onclick="showSection('moments')">
+                <div class="tab-icon">
+                    <img src="OIP.webp" alt="Moments">
+                </div>
+                <h3>My Favourite Moments With You</h3>
+            </div>
+            
+            <div class="tab-card" onclick="showSection('gifts')">
+                <div class="tab-icon">
+                    <img src="pngtree-cute-gift-box-icon-illustration-png-image_8876962.png" alt="Gifts">
+                </div>
+                <h3>Your Gifts</h3>
+            </div>
+            
+            <div class="tab-card" onclick="showSection('playlist')">
+                <div class="tab-icon">
+                    <img src="Music-Folder-Sakura-icon.png" alt="Playlist">
+                </div>
+                <h3>A Playlist For You</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Section -->
+   <div class="content-section" id="messageSection">
+    <button class="back-btn" onclick="backToDashboard()">← Back</button>
+    <div class="content-card">
+        <h2>A Message For You 💌</h2>
+
+        <p><b>Dear Phiwe,</b></p>
+
+        <p>
+            And there it is... the day you turn 21. I am so honoured to have witnessed you grow into the wonderful woman you are. 
+            I’ve seen the good days, I’ve seen the bad days, and most importantly, I’ve seen the days where you chose to respond to life in an adult way. 
+            That transition from uMajijana to Big Girl Phiwe has been so beautiful to witness.
+        </p>
+
+        <p>
+            I pray that uThixo angaqhubeka abukhanyise ubuso bakhe phezu kwakho, sthandwa sam. I hope your 20s are nothing but good to you. 
+            I cannot wait to see you grow even more, and thank you for taking me with.
+        </p>
+
+        <p>
+            I love and cherish every moment I've shared with you. I want you to know that in every lifetime, in every dimension, 
+            I will CHOOSE you.
+        </p>
+
+        <p>
+            Happy 21st Birthday sthandwa sam, have a day as amazing as you.
+        </p>
+
+        <p><b>With love,</b></p>
+        <p><b>Mabhiyobhiyo</b><br/>PS: I hope you like the cute little website</p>
+    </div>
+</div>
+
+
+    <!-- Moments Section -->
+    <div class="content-section" id="momentsSection">
+        <button class="back-btn" onclick="backToDashboard()">← Back</button>
+        <div class="content-card">
+            <h2>My Favourite Moments With You 📸</h2>
+            <p><b>Since 2009...</b></p>
+            <p>Every moment with you has been special. From our first conversations to all the laughs we've shared, you've made every day brighter.</p>
+            <p>Remember all those times we talked about everything and nothing? Those are the moments I treasure most.</p>
+            <p>Here's to many more memories together! 🥂</p>
+        </div>
+    </div>
+
+    <!-- Gifts Section -->
+   <div class="content-section" id="giftsSection">
+    <button class="back-btn" onclick="backToDashboard()">← Back</button>
+    <div class="content-card">
+        <h2>Your Birthday Gifts 🎁</h2>
+        
+        <div class="gift-item">
+            <div class="gift-info">
+                <h4>💃 TikTok Fiesta</h4>
+                <p>You get to bully me into making 5 TikToks with you 😭</p>
+            </div>
+            <button class="redeem-btn" onclick="redeemGift(this)">Redeem</button>
+        </div>
+        
+        <div class="gift-item">
+            <div class="gift-info">
+                <h4>🎬 Movie Night</h4>
+                <p>Your choice of movie + snacks on me</p>
+            </div>
+            <button class="redeem-btn" onclick="redeemGift(this)">Redeem</button>
+        </div>
+        
+        <div class="gift-item">
+            <div class="gift-info">
+                <h4>🍾 Day Drinking or Clubbing</h4>
+                <p>Choose mayikhethela, a relaxed day with ezibandayo or the dance floor... on me</p>
+            </div>
+            <button class="redeem-btn" onclick="redeemGift(this)">Redeem</button>
+        </div>
+        
+        <div class="gift-item">
+            <div class="gift-info">
+                <h4>🎨 Surprise Gift</h4>
+                <p>Something special I picked just for you</p>
+            </div>
+            <button class="redeem-btn" onclick="redeemGift(this)">Redeem</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Playlist Section -->
+<div class="content-section" id="playlistSection">
+    <button class="back-btn" onclick="backToDashboard()">← Back</button>
+    <div class="content-card">
+        <h2>A Playlist For You 🎵</h2>
+        <p>I've put together a collection of songs that remind me of you and all our moments together. <br/> Each song has a memory attached to it, a feeling, or a moment we shared.</p>
+        <p> "We don't remember days we remember moments" <br/> PS: Uluncumo Lwami Wena 💋</p>
+        <!-- Spotify Embed Player -->
+        <div style="margin-top: 40px; display: flex; justify-content: center;">
+            <iframe 
+                style="border-radius: 12px;" 
+                src="https://open.spotify.com/embed/playlist/4vW8x0YNrK875giC14lDYY?utm_source=generator" 
+                width="100%" 
+                height="352" 
+                frameborder="0" 
+                allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
+
+    </div>
+</div>
+
+
+    <script>
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMessage');
+            
+            if (input.toLowerCase() === 'toby maguire' || input.toLowerCase() === 'tobymaguire') {
+                document.getElementById('passwordScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        function showSection(section) {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById(section + 'Section').style.display = 'block';
+        }
+        
+        function backToDashboard() {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById('dashboard').style.display = 'block';
+        }
+        
+        function redeemGift(button) {
+            if (!button.classList.contains('redeemed')) {
+                button.textContent = '✓ Redeemed';
+                button.classList.add('redeemed');
+                button.disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>
