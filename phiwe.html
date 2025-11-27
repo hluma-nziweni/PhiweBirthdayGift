@@ -384,6 +384,128 @@
                 text-align: center;
                 gap: 15px;
             }
+            
+            .content-card {
+                padding: 25px;
+            }
+            
+            .content-card h2 {
+                font-size: 28px;
+            }
+            
+            .content-card p {
+                font-size: 18px;
+            }
+        }
+        
+        /* Extra small devices (iPhone 6 and smaller - 375px and below) */
+        @media (max-width: 375px) {
+            body {
+                padding: 10px;
+            }
+            
+            .password-container {
+                padding: 25px;
+                max-width: 100%;
+            }
+            
+            .lock-icon {
+                font-size: 45px;
+            }
+            
+            .password-container h2 {
+                font-size: 22px;
+            }
+            
+            .hint {
+                font-size: 14px;
+            }
+            
+            .password-input, .submit-btn {
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .dashboard {
+                padding: 10px;
+            }
+            
+            .dashboard-header {
+                margin-bottom: 30px;
+            }
+            
+            .burn-letter {
+                padding: 8px 12px;
+            }
+            
+            .burn-letter:nth-child(1) { font-size: 42px; }
+            .burn-letter:nth-child(2) { font-size: 38px; }
+            .burn-letter:nth-child(3) { font-size: 40px; }
+            .burn-letter:nth-child(4) { font-size: 44px; }
+            .burn-letter:nth-child(5) { font-size: 39px; }
+            
+            .turns-21 {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+            
+            .tabs-grid {
+                gap: 15px;
+            }
+            
+            .tab-card {
+                padding: 25px 20px;
+            }
+            
+            .tab-icon {
+                font-size: 48px;
+            }
+            
+            .tab-icon img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .tab-card h3 {
+                font-size: 18px;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .content-card h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            
+            .content-card p {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+            
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .gift-item {
+                padding: 15px;
+            }
+            
+            .gift-info h4 {
+                font-size: 18px;
+            }
+            
+            .gift-info p {
+                font-size: 14px;
+            }
+            
+            .redeem-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -461,7 +583,7 @@
 
         <p>
             And there it is... the day you turn 21. I am so honoured to have witnessed you grow into the wonderful woman you are. 
-            I’ve seen the good days, I’ve seen the bad days, and most importantly, I’ve seen the days where you chose to respond to life in an adult way. 
+            I've seen the good days, I've seen the bad days, and most importantly, I've seen the days where you chose to respond to life in an adult way. 
             That transition from uMajijana to Big Girl Phiwe has been so beautiful to witness.
         </p>
 
@@ -485,15 +607,15 @@
 </div>
 
 
-
-<!-- Moments Section -->
+    <!-- Moments Section -->
     <div class="content-section" id="momentsSection">
         <button class="back-btn" onclick="backToDashboard()">← Back</button>
         <div class="content-card">
             <h2>My Favourite Moments With You 📸</h2>
             <p><b>21 Moments for 21 Years...</b></p>
             <p>Every moment with you has been special. From our first conversations to all the laughs we've shared, you've made every day brighter.</p>
-            <p>I've carefully chosen 21 of my absolute favourite moments with you. Each photo holds a memory, a feeling, a piece of uMajijana wam.</p>
+            <p>I've carefully chosen 21 of my absolute favourite moments with you - one for each year you're celebrating today. Each photo holds a memory, a feeling, and a piece of our journey together.</p>
+            <p>Remember all those times we talked about everything and nothing? Those are the moments I treasure most.</p>
             <p>Here's to many more memories together! 🥂</p>
             
             <!-- Photo Album Button -->
@@ -611,6 +733,18 @@
         
         function redeemGift(button) {
             if (!button.classList.contains('redeemed')) {
+                // Get the gift name from the h4 element
+                const giftName = button.parentElement.querySelector('h4').textContent;
+                
+                // Create mailto link
+                const subject = encodeURIComponent('🎁 Birthday Gift Redeemed!');
+                const body = encodeURIComponent(`Hey!\n\nI'm redeeming my birthday gift: ${giftName}\n\nLet's make it happen! 💕\n\n- Phiwe`);
+                const mailtoLink = `mailto:h.nziweni@gmail.com?subject=${subject}&body=${body}`;
+                
+                // Open email client
+                window.location.href = mailtoLink;
+                
+                // Mark as redeemed
                 button.textContent = '✓ Redeemed';
                 button.classList.add('redeemed');
                 button.disabled = true;
